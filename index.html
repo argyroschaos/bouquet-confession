@@ -43,11 +43,15 @@
         }
 
         .container {
-          display: block;  /* or flex if you want internal flex children, but not full-page centering */
-          padding: 20px;
-          position: relative;
-          z-index: 1;
-          text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;    /* This centers vertically within itself */
+            min-height: 100vh;          /* Make the container as tall as viewport */
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+            text-align: center;
         }
         
         .bouquet-container {
@@ -382,9 +386,8 @@
     <div class="magical-bg"></div>
     <div class="floating-hearts" id="floatingHearts"></div>
     
-    <h1 class="title">Daily Bouquets of Love</h1>
-    
     <div class="container">
+        <h1 class="title">Daily Bouquets of Love</h1>
         <div class="bouquet-container">
             <div class="bouquet" id="bouquet"></div>
             <div class="sparkle-overlay" id="sparkles"></div>
