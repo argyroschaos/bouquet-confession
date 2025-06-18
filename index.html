@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Bouquets of Love</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: radial-gradient(circle at center, #FFE4E6 0%, #FFF0F5 30%, #E6E6FA 60%, #F0F8FF 100%);
+            min-height: 100vh;
+            font-family: 'Dancing Script', cursive;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .magical-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(255, 182, 193, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(221, 160, 221, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 60% 40%, rgba(255, 240, 245, 0.4) 0%, transparent 50%);
+            animation: breathe 8s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        @keyframes breathe {
+            0%, 100% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .bouquet-container {
+            position: relative;
+            margin-bottom: 60px;
+            animation: gentleFloat 6s ease-in-out infinite;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            height: 400px;
+            width: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @keyframes gentleFloat {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-10px) rotate(0.5deg); }
+            50% { transform: translateY(-5px) rotate(0deg); }
+            75% { transform: translateY(-15px) rotate(-0.5deg); }
+        }
+
+        .bouquet {
+            position: relative;
+            transform-origin: center bottom;
+            width: 280px;
+            height: 380px;
+        }
+
+        .pixel {
+            width: 4px;
+            height: 4px;
+            position: absolute;
+            image-rendering: pixelated;
+            border-radius: 0.5px;
+            box-shadow: 0 0 1px rgba(0,0,0,0.1);
+        }
+
+        .sparkle-overlay {
+            position: absolute;
+            top: -50px;
+            left: -50px;
+            right: -50px;
+            bottom: -50px;
+            pointer-events: none;
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: radial-gradient(circle, #FFD700 0%, #FFA500 100%);
+            border-radius: 50%;
+            animation: twinkle 3s linear infinite;
+            opacity: 0;
+            box-shadow: 0 0 6px #FFD700;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0; transform: scale(0) rotate(0deg); }
+            10% { opacity: 1; transform: scale(1) rotate(36deg); }
+            90% { opacity: 1; transform: scale(1) rotate(324deg); }
+            100% { opacity: 0; transform: scale(0) rotate(360deg); }
+        }
+
+        .cloud {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 50px;
+            animation: cloudFloat 15s linear infinite;
+            backdrop-filter: blur(2px);
+        }
+
+        @keyframes cloudFloat {
+            from { transform: translateX(-100px) translateY(20px); opacity: 0.3; }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.6; }
+            to { transform: translateX(400px) translateY(-20px); opacity: 0.3; }
+        }
+
+        .quote-section {
+            text-align: center;
+            max-width: 800px;
+            position: relative;
+        }
+
+        .quote-container {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            padding: 40px 50px;
+            box-shadow: 
+                0 8px 32px rgba(0,0,0,0.1),
+                inset 0 1px 0 rgba(255,255,255,0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quote-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, 
+                rgba(255,182,193,0.1) 0%, 
+                rgba(221,160,221,0.1) 50%, 
+                rgba(255,240,245,0.1) 100%);
+            z-index: -1;
+        }
+
+        .quote {
+            font-size: 28px;
+            color: #4A4A4A;
+            line-height: 1.6;
+            font-weight: 500;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            margin-bottom: 20px;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .quote.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .quote::before {
+            content: '"';
+            font-size: 48px;
+            color: #FFB6C1;
+            position: absolute;
+            left: 10px;
+            top: -10px;
+            font-family: serif;
+        }
+
+        .quote::after {
+            content: '"';
+            font-size: 48px;
+            color: #FFB6C1;
+            position: absolute;
+            right: 10px;
+            bottom: -30px;
+            font-family: serif;
+        }
+
+        .quote-author {
+            font-size: 16px;
+            color: #8B8B8B;
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            opacity: 0.8;
+        }
+
+        .input-section {
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .add-quote-container {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .quote-input {
+            padding: 15px 20px;
+            border: 2px solid rgba(255, 182, 193, 0.3);
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            font-family: 'Dancing Script', cursive;
+            font-size: 18px;
+            color: #4A4A4A;
+            width: 400px;
+            max-width: 90vw;
+            transition: all 0.3s ease;
+        }
+
+        .quote-input:focus {
+            outline: none;
+            border-color: #FFB6C1;
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 20px rgba(255, 182, 193, 0.3);
+        }
+
+        .quote-input::placeholder {
+            color: #999;
+            font-style: italic;
+        }
+
+        .add-btn {
+            padding: 15px 30px;
+            background: linear-gradient(45deg, #FFB6C1, #FF69B4);
+            border: none;
+            border-radius: 25px;
+            color: white;
+            font-family: 'Dancing Script', cursive;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);
+        }
+
+        .add-btn:hover {
+            background: linear-gradient(45deg, #FF69B4, #FF1493);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 105, 180, 0.4);
+        }
+
+        .floating-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .heart {
+            position: absolute;
+            color: rgba(255, 182, 193, 0.6);
+            font-size: 20px;
+            animation: floatHeart 8s linear infinite;
+            opacity: 0;
+        }
+
+        @keyframes floatHeart {
+            0% { 
+                opacity: 0; 
+                transform: translateY(100vh) translateX(0px) rotate(0deg) scale(0.5);
+            }
+            10% { 
+                opacity: 0.8; 
+            }
+            90% { 
+                opacity: 0.8; 
+            }
+            100% { 
+                opacity: 0; 
+                transform: translateY(-100px) translateX(50px) rotate(360deg) scale(1.2);
+            }
+        }
+
+        .title {
+            position: absolute;
+            top: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            color: #8B4B8C;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            opacity: 0.9;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(45deg, #90EE90, #98FB98);
+            color: #2F4F2F;
+            padding: 15px 25px;
+            border-radius: 25px;
+            font-family: 'Dancing Script', cursive;
+            font-size: 18px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(144, 238, 144, 0.3);
+            transform: translateX(400px);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 1000;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .quote {
+                font-size: 22px;
+                min-height: 100px;
+            }
+            
+            .quote-container {
+                padding: 30px 25px;
+            }
+            
+            .title {
+                font-size: 24px;
+                top: 20px;
+            }
+            
+            .add-quote-container {
+                flex-direction: column;
+            }
+            
+            .quote-input {
+                width: 100%;
+            }
+
+            .bouquet-container {
+                height: 350px;
+                width: 250px;
+            }
+
+            .bouquet {
+                width: 230px;
+                height: 330px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="magical-bg"></div>
+    <div class="floating-hearts" id="floatingHearts"></div>
+    
+    <h1 class="title">Daily Bouquets of Love</h1>
+    
+    <div class="container">
+        <div class="bouquet-container">
+            <div class="bouquet" id="bouquet"></div>
+            <div class="sparkle-overlay" id="sparkles"></div>
+            <div class="cloud" id="cloud1" style="width: 60px; height: 30px; top: -40px; left: 50px;"></div>
+            <div class="cloud" id="cloud2" style="width: 45px; height: 25px; top: -20px; right: 30px; animation-delay: -7s;"></div>
+            <div class="cloud" id="cloud3" style="width: 55px; height: 28px; top: -60px; left: -20px; animation-delay: -3s;"></div>
+        </div>
+        
+        <div class="quote-section">
+            <div class="quote-container">
+                <div class="quote active" id="currentQuote"></div>
+                <div class="quote-author">— With endless love</div>
+                
+                <div class="input-section">
+                    <div class="add-quote-container">
+                        <input type="text" 
+                               class="quote-input" 
+                               id="quoteInput" 
+                               placeholder="Add your own message of love..."
+                               maxlength="200">
+                        <button class="add-btn" onclick="addQuote()">Add Quote ♡</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="notification" id="notification"></div>
+
+    <script>
+                // Enhanced detailed bouquet templates based on the reference images
+        const bouquetTemplates = {
+            roses: {
+                pixels: [
+                    // Large detailed rose bouquet with wrapped stem
+                    // Main roses - Center large rose (purple/pink)
+                    {x: 138, y: 60, color: '#8B4B8C'}, {x: 142, y: 60, color: '#8B4B8C'}, {x: 146, y: 60, color: '#8B4B8C'},
+                    {x: 134, y: 64, color: '#8B4B8C'}, {x: 138, y: 64, color: '#DDA0DD'}, {x: 142, y: 64, color: '#DDA0DD'}, {x: 146, y: 64, color: '#DDA0DD'}, {x: 150, y: 64, color: '#8B4B8C'},
+                    {x: 130, y: 68, color: '#8B4B8C'}, {x: 134, y: 68, color: '#DDA0DD'}, {x: 138, y: 68, color: '#FFB6C1'}, {x: 142, y: 68, color: '#FFB6C1'}, {x: 146, y: 68, color: '#DDA0DD'}, {x: 150, y: 68, color: '#DDA0DD'}, {x: 154, y: 68, color: '#8B4B8C'},
+                    {x: 130, y: 72, color: '#8B4B8C'}, {x: 134, y: 72, color: '#DDA0DD'}, {x: 138, y: 72, color: '#FFB6C1'}, {x: 142, y: 72, color: '#FFF0F5'}, {x: 146, y: 72, color: '#FFB6C1'}, {x: 150, y: 72, color: '#DDA0DD'}, {x: 154, y: 72, color: '#8B4B8C'},
+                    {x: 134, y: 76, color: '#8B4B8C'}, {x: 138, y: 76, color: '#DDA0DD'}, {x: 142, y: 76, color: '#DDA0DD'}, {x: 146, y: 76, color: '#DDA0DD'}, {x: 150, y: 76, color: '#8B4B8C'},
+                    {x: 138, y: 80, color: '#8B4B8C'}, {x: 142, y: 80, color: '#8B4B8C'}, {x: 146, y: 80, color: '#8B4B8C'},
+
+                    // Left rose (pink)
+                    {x: 106, y: 72, color: '#FF69B4'}, {x: 110, y: 72, color: '#FF69B4'}, {x: 114, y: 72, color: '#FF69B4'},
+                    {x: 102, y: 76, color: '#FF69B4'}, {x: 106, y: 76, color: '#FFB6C1'}, {x: 110, y: 76, color: '#FFF0F5'}, {x: 114, y: 76, color: '#FFB6C1'}, {x: 118, y: 76, color: '#FF69B4'},
+                    {x: 102, y: 80, color: '#FF69B4'}, {x: 106, y: 80, color: '#FFB6C1'}, {x: 110, y: 80, color: '#FFF0F5'}, {x: 114, y: 80, color: '#FFB6C1'}, {x: 118, y: 80, color: '#FF69B4'},
+                    {x: 106, y: 84, color: '#FF69B4'}, {x: 110, y: 84, color: '#FF69B4'}, {x: 114, y: 84, color: '#FF69B4'},
+
+                    // Right rose (deep pink)
+                    {x: 166, y: 76, color: '#DC143C'}, {x: 170, y: 76, color: '#DC143C'}, {x: 174, y: 76, color: '#DC143C'},
+                    {x: 162, y: 80, color: '#DC143C'}, {x: 166, y: 80, color: '#FF6347'}, {x: 170, y: 80, color: '#FFB6C1'}, {x: 174, y: 80, color: '#FF6347'}, {x: 178, y: 80, color: '#DC143C'},
+                    {x: 162, y: 84, color: '#DC143C'}, {x: 166, y: 84, color: '#FF6347'}, {x: 170, y: 84, color: '#FFB6C1'}, {x: 174, y: 84, color: '#FF6347'}, {x: 178, y: 84, color: '#DC143C'},
+                    {x: 166, y: 88, color: '#DC143C'}, {x: 170, y: 88, color: '#DC143C'}, {x: 174, y: 88, color: '#DC143C'},
+
+                    // Upper left rose (lavender)
+                    {x: 118, y: 48, color: '#E6E6FA'}, {x: 122, y: 48, color: '#E6E6FA'}, {x: 126, y: 48, color: '#E6E6FA'},
+                    {x: 114, y: 52, color: '#E6E6FA'}, {x: 118, y: 52, color: '#DDA0DD'}, {x: 122, y: 52, color: '#FFF0F5'}, {x: 126, y: 52, color: '#DDA0DD'}, {x: 130, y: 52, color: '#E6E6FA'},
+                    {x: 114, y: 56, color: '#E6E6FA'}, {x: 118, y: 56, color: '#DDA0DD'}, {x: 122, y: 56, color: '#FFF0F5'}, {x: 126, y: 56, color: '#DDA0DD'}, {x: 130, y: 56, color: '#E6E6FA'},
+                    {x: 118, y: 60, color: '#E6E6FA'}, {x: 122, y: 60, color: '#E6E6FA'}, {x: 126, y: 60, color: '#E6E6FA'},
+
+                    // Upper right rose (coral)
+                    {x: 154, y: 52, color: '#FF7F50'}, {x: 158, y: 52, color: '#FF7F50'}, {x: 162, y: 52, color: '#FF7F50'},
+                    {x: 150, y: 56, color: '#FF7F50'}, {x: 154, y: 56, color: '#FFB6C1'}, {x: 158, y: 56, color: '#FFF0F5'}, {x: 162, y: 56, color: '#FFB6C1'}, {x: 166, y: 56, color: '#FF7F50'},
+                    {x: 150, y: 60, color: '#FF7F50'}, {x: 154, y: 60, color: '#FFB6C1'}, {x: 158, y: 60, color: '#FFF0F5'}, {x: 162, y: 60, color: '#FFB6C1'}, {x: 166, y: 60, color: '#FF7F50'},
+                    {x: 154, y: 64, color: '#FF7F50'}, {x: 158, y: 64, color: '#FF7F50'}, {x: 162, y: 64, color: '#FF7F50'},
+
+                    // Additional smaller roses
+                    {x: 94, y: 88, color: '#9370DB'}, {x: 98, y: 88, color: '#DDA0DD'}, {x: 102, y: 88, color: '#9370DB'},
+                    {x: 94, y: 92, color: '#DDA0DD'}, {x: 98, y: 92, color: '#FFF0F5'}, {x: 102, y: 92, color: '#DDA0DD'},
+                    {x: 94, y: 96, color: '#9370DB'}, {x: 98, y: 96, color: '#DDA0DD'}, {x: 102, y: 96, color: '#9370DB'},
+
+                    {x: 178, y: 92, color: '#FF1493'}, {x: 182, y: 92, color: '#FFB6C1'}, {x: 186, y: 92, color: '#FF1493'},
+                    {x: 178, y: 96, color: '#FFB6C1'}, {x: 182, y: 96, color: '#FFF0F5'}, {x: 186, y: 96, color: '#FFB6C1'},
+                    {x: 178, y: 100, color: '#FF1493'}, {x: 182, y: 100, color: '#FFB6C1'}, {x: 186, y: 100, color: '#FF1493'},
+
+                    // Leaves and foliage - scattered throughout
+                    {x: 90, y: 76, color: '#228B22'}, {x: 94, y: 80, color: '#32CD32'}, {x: 98, y: 84, color: '#228B22'},
+                    {x: 122, y: 88, color: '#228B22'}, {x: 126, y: 92, color: '#32CD32'}, {x: 130, y: 96, color: '#228B22'},
+                    {x: 154, y: 84, color: '#228B22'}, {x: 158, y: 88, color: '#32CD32'}, {x: 162, y: 92, color: '#228B22'},
+                    {x: 186, y: 76, color: '#228B22'}, {x: 190, y: 80, color: '#32CD32'}, {x: 194, y: 84, color: '#228B22'},
+                    {x: 110, y: 40, color: '#228B22'}, {x: 114, y: 44, color: '#32CD32'}, {x: 170, y: 44, color: '#228B22'}, {x: 174, y: 40, color: '#32CD32'},
+
+                    // Main stems
+                    {x: 138, y: 100, color: '#228B22'}, {x: 142, y: 100, color: '#228B22'}, {x: 146, y: 100, color: '#228B22'},
+                    {x: 138, y: 104, color: '#228B22'}, {x: 142, y: 104, color: '#228B22'}, {x: 146, y: 104, color: '#228B22'},
+                    {x: 138, y: 108, color: '#228B22'}, {x: 142, y: 108, color: '#228B22'}, {x: 146, y: 108, color: '#228B22'},
+                    {x: 138, y: 112, color: '#228B22'}, {x: 142, y: 112, color: '#228B22'}, {x: 146, y: 112, color: '#228B22'},
+                    {x: 138, y: 116, color: '#228B22'}, {x: 142, y: 116, color: '#228B22'}, {x: 146, y: 116, color: '#228B22'},
+                    {x: 138, y: 120, color: '#228B22'}, {x: 142, y: 120, color: '#228B22'}, {x: 146, y: 120, color: '#228B22'},
+                    {x: 138, y: 124, color: '#228B22'}, {x: 142, y: 124, color: '#228B22'}, {x: 146, y: 124, color: '#228B22'},
+                    {x: 138, y: 128, color: '#228B22'}, {x: 142, y: 128, color: '#228B22'}, {x: 146, y: 128, color: '#228B22'},
+                    {x: 138, y: 132, color: '#228B22'}, {x: 142, y: 132, color: '#228B22'}, {x: 146, y: 132, color: '#228B22'},
+                    {x: 138, y: 136, color: '#228B22'}, {x: 142, y: 136, color: '#228B22'}, {x: 146, y: 136, color: '#228B22'},
+                    {x: 138, y: 140, color: '#228B22'}, {x: 142, y: 140, color: '#228B22'}, {x: 146, y: 140, color: '#228B22'},
+                    {x: 138, y: 144, color: '#228B22'}, {x: 142, y: 144, color: '#228B22'}, {x: 146, y: 144, color: '#228B22'},
+                    {x: 138, y: 148, color: '#228B22'}, {x: 142, y: 148, color: '#228B22'}, {x: 146, y: 148, color: '#228B22'},
+                    {x: 138, y: 152, color: '#228B22'}, {x: 142, y: 152, color: '#228B22'}, {x: 146, y: 152, color: '#228B22'},
+                    {x: 138, y: 156, color: '#228B22'}, {x: 142, y: 156, color: '#228B22'}, {x: 146, y: 156, color: '#228B22'},
+                    {x: 138, y: 160, color: '#228B22'}, {x: 142, y: 160, color: '#228B22'}, {x: 146, y: 160, color: '#228B22'},
+                    {x: 138, y: 164, color: '#228B22'}, {x: 142, y: 164, color: '#228B22'}, {x: 146, y: 164, color: '#228B22'},
+                    {x: 138, y: 168, color: '#228B22'}, {x: 142, y: 168, color: '#228B22'}, {x: 146, y: 168, color: '#228B22'},
+                    {x: 138, y: 172, color: '#228B22'}, {x: 142, y: 172, color: '#228B22'}, {x: 146, y: 172, color: '#228B22'},
+                    {x: 138, y: 176, color: '#228B22'}, {x: 142, y: 176, color: '#228B22'}, {x: 146, y: 176, color: '#228B22'},
+                    {x: 138, y: 180, color: '#228B22'}, {x: 142, y: 180, color: '#228B22'}, {x: 146, y: 180, color: '#228B22'},
+                    {x: 138, y: 184, color: '#228B22'}, {x: 142, y: 184, color: '#228B22'}, {x: 146, y: 184, color: '#228B22'},
+                    {x: 138, y: 188, color: '#228B22'}, {x: 142, y: 188, color: '#228B22'}, {x: 146, y: 188, color: '#228B22'},
+                    {x: 138, y: 192, color: '#228B22'}, {x: 142, y: 192, color: '#228B22'}, {x: 146, y: 192, color: '#228B22'},
+                    {x: 138, y: 196, color: '#228B22'}, {x: 142, y: 196, color: '#228B22'}, {x: 146, y: 196, color: '#228B22'},
+                    {x: 138, y: 200, color: '#228B22'}, {x: 142, y: 200, color: '#228B22'}, {x: 146, y: 200, color: '#228B22'},
+                    {x: 138, y: 204, color: '#228B22'}, {x: 142, y: 204, color: '#228B22'}, {x: 146, y: 204, color: '#228B22'},
+                    {x: 138, y: 208, color: '#228B22'}, {x: 142, y: 208, color: '#228B22'}, {x: 146, y: 208, color: '#228B22'},
+                    {x: 138, y: 212, color: '#228B22'}, {x: 142, y: 212, color: '#228B22'}, {x: 146, y: 212, color: '#228B22'},
+                    {x: 138, y: 216, color: '#228B22'}, {x: 142, y: 216, color: '#228B22'}, {x: 146, y: 216, color: '#228B22'},
+
+                    // Ribbon wrapping around stem (pink ribbon)
+                    {x: 130, y: 200, color: '#FF69B4'}, {x: 134, y: 200, color: '#FF69B4'}, {x: 150, y: 200, color: '#FF69B4'}, {x: 154, y: 200, color: '#FF69B4'},
+                    {x: 126, y: 204, color: '#FF69B4'}, {x: 130, y: 204, color: '#FFB6C1'}, {x: 134, y: 204, color: '#FFF0F5'}, {x: 150, y: 204, color: '#FFF0F5'}, {x: 154, y: 204, color: '#FFB6C1'}, {x: 158, y: 204, color: '#FF69B4'},
+                    {x: 126, y: 208, color: '#FF69B4'}, {x: 130, y: 208, color: '#FFB6C1'}, {x: 134, y: 208, color: '#FFF0F5'}, {x: 150, y: 208, color: '#FFF0F5'}, {x: 154, y: 208, color: '#FFB6C1'}, {x: 158, y: 208, color: '#FF69B4'},
+                    {x: 130, y: 212, color: '#FF69B4'}, {x: 134, y: 212, color: '#FF69B4'}, {x: 150, y: 212, color: '#FF69B4'}, {x: 154, y: 212, color: '#FF69B4'},
+
+                    // Additional ribbon details
+                    {x: 122, y: 220, color: '#FF69B4'}, {x: 126, y: 220, color: '#FFB6C1'}, {x: 130, y: 220, color: '#FFF0F5'}, {x: 154, y: 220, color: '#FFF0F5'}, {x: 158, y: 220, color: '#FFB6C1'}, {x: 162, y: 220, color: '#FF69B4'},
+                    {x: 118, y: 224, color: '#FF69B4'}, {x: 122, y: 224, color: '#FFB6C1'}, {x: 126, y: 224, color: '#FFF0F5'}, {x: 158, y: 224, color: '#FFF0F5'}, {x: 162, y: 224, color: '#FFB6C1'}, {x: 166, y: 224, color: '#FF69B4'},
+
+                    // Ribbon bow
+                    {x: 118, y: 240, color: '#FF69B4'}, {x: 122, y: 240, color: '#FF69B4'}, {x: 126, y: 240, color: '#FF69B4'}, {x: 158, y: 240, color: '#FF69B4'}, {x: 162, y: 240, color: '#FF69B4'}, {x: 166, y: 240, color: '#FF69B4'},
+                    {x: 114, y: 244, color: '#FF69B4'}, {x: 118, y: 244, color: '#FFB6C1'}, {x: 122, y: 244, color: '#FFF0F5'}, {x: 126, y: 244, color: '#FFB6C1'}, {x: 158, y: 244, color: '#FFB6C1'}, {x: 162, y: 244, color: '#FFF0F5'}, {x: 166, y: 244, color: '#FFB6C1'}, {x: 170, y: 244, color: '#FF69B4'},
+                    {x: 110, y: 248, color: '#FF69B4'}, {x: 114, y: 248, color: '#FFB6C1'}, {x: 118, y: 248, color: '#FFF0F5'}, {x: 122, y: 248, color: '#FFB6C1'}, {x: 162, y: 248, color: '#FFB6C1'}, {x: 166, y: 248, color: '#FFF0F5'}, {x: 170, y: 248, color: '#FFB6C1'}, {x: 174, y: 248, color: '#FF69B4'},
+                    {x: 114, y: 252, color: '#FF69B4'}, {x: 118, y: 252, color: '#FFB6C1'}, {x: 122, y: 252, color: '#FFF0F5'}, {x: 126, y: 252, color: '#FFB6C1'}, {x: 158, y: 252, color: '#FFB6C1'}, {x: 162, y: 252, color: '#FFF0F5'}, {x: 166, y: 252, color: '#FFB6C1'}, {x: 170, y: 252, color: '#FF69B4'},
+                    {x: 118, y: 256, color: '#FF69B4'}, {x: 122, y: 256, color: '#FF69B4'}, {x: 126, y: 256, color: '#FF69B4'}, {x: 158, y: 256, color: '#FF69B4'}, {x: 162, y: 256, color: '#FF69B4'}, {x: 166, y: 256, color: '#FF69B4'},
+
+                    // Center bow knot
+                    {x: 130, y: 244, color: '#DC143C'}, {x: 134, y: 244, color: '#FF1493'}, {x: 138, y: 244, color: '#FF69B4'}, {x: 142, y: 244, color: '#FF69B4'}, {x: 146, y: 244, color: '#FF69B4'}, {x: 150, y: 244, color: '#FF1493'}, {x: 154, y: 244, color: '#DC143C'},
+                    {x: 130, y: 248, color: '#FF1493'}, {x: 134, y: 248, color: '#FFB6C1'}, {x: 138, y: 248, color: '#FFF0F5'}, {x: 142, y: 248, color: '#FFF0F5'}, {x: 146, y: 248, color: '#FFF0F5'}, {x: 150, y: 248, color: '#FFB6C1'}, {x: 154, y: 248, color: '#FF1493'},
+                    {x: 130, y: 252, color: '#DC143C'}, {x: 134, y: 252, color: '#FF1493'}, {x: 138, y: 252, color: '#FF69B4'}, {x: 142, y: 252, color: '#FF69B4'}, {x: 146, y: 252, color: '#FF69B4'}, {x: 150, y: 252, color: '#FF1493'}, {x: 154, y: 252, color: '#DC143C'}
+                ]
+            },
+            tulips: {
+                pixels: [
+                    // Large detailed tulip bouquet based on reference image
+                    // Central tulip (red) - tallest
+                    {x: 138, y: 50, color: '#DC143C'}, {x: 142, y: 50, color: '#DC143C'}, {x: 146, y: 50, color: '#DC143C'},
+                    {x: 134, y: 54, color: '#DC143C'}, {x: 138, y: 54, color: '#FF0000'}, {x: 142, y: 54, color: '#FF6347'}, {x: 146, y: 54, color: '#FF0000'}, {x: 150, y: 54, color: '#DC143C'},
+                    {x: 130, y: 58, color: '#DC143C'}, {x: 134, y: 58, color: '#FF0000'}, {x: 138, y: 58, color: '#FF6347'}, {x: 142, y: 58, color: '#FFB6C1'}, {x: 146, y: 58, color: '#FF6347'}, {x: 150, y: 58, color: '#FF0000'}, {x: 154, y: 58, color: '#DC143C'},
+                    {x: 130, y: 62, color: '#DC143C'}, {x: 134, y: 62, color: '#FF0000'}, {x: 138, y: 62, color: '#FF6347'}, {x: 142, y: 62, color: '#FFB6C1'}, {x: 146, y: 62, color: '#FF6347'}, {x: 150, y: 62, color: '#FF0000'}, {x: 154, y: 62, color: '#DC143C'},
+                    {x: 130, y: 66, color: '#DC143C'}, {x: 134, y: 66, color: '#FF0000'}, {x: 138, y: 66, color: '#FF6347'}, {x: 142, y: 66, color: '#FF6347'}, {x: 146, y: 66, color: '#FF6347'}, {x: 150, y: 66, color: '#FF0000'}, {x: 154, y: 66, color: '#DC143C'},
+                    {x: 134, y: 70, color: '#DC143C'}, {x: 138, y: 70, color: '#B22222'}, {x: 142, y: 70, color: '#B22222'}, {x: 146, y: 70, color: '#B22222'}, {x: 150, y: 70, color: '#DC143C'},
+                    {x: 138, y: 74, color: '#8B0000'}, {x: 142, y: 74, color: '#8B0000'}, {x: 146, y: 74, color: '#8B0000'},
+
+                    // Left tulip (yellow)
+                    {x: 98, y: 64, color: '#FFD700'}, {x: 102, y: 64, color: '#FFD700'}, {x: 106, y: 64, color: '#FFD700'},
+                    {x: 94, y: 68, color: '#FFD700'}, {x: 98, y: 68, color: '#FFFF00'}, {x: 102, y: 68, color: '#FFF8DC'}, {x: 106, y: 68, color: '#FFFF00'}, {x: 110, y: 68, color: '#FFD700'},
+                    {x: 90, y: 72, color: '#FFD700'}, {x: 94, y: 72, color: '#FFFF00'}, {x: 98, y: 72, color: '#FFF8DC'}, {x: 102, y: 72, color: '#FFFACD'}, {x: 106, y: 72, color: '#FFF8DC'}, {x: 110, y: 72, color: '#FFFF00'}, {x: 114, y: 72, color: '#FFD700'},
+                    {x: 90, y: 76, color: '#FFD700'}, {x: 94, y: 76, color: '#FFFF00'}, {x: 98, y: 76, color: '#FFF8DC'}, {x: 102, y: 76, color: '#FFFACD'}, {x: 106, y: 76, color: '#FFF8DC'}, {x: 110, y: 76, color: '#FFFF00'}, {x: 114, y: 76, color: '#FFD700'},
+                    {x: 90, y: 80, color: '#FFD700'}, {x: 94, y: 80, color: '#FFFF00'}, {x: 98, y: 80, color: '#FFF8DC'}, {x: 102, y: 80, color: '#FFF8DC'}, {x: 106, y: 80, color: '#FFF8DC'}, {x: 110, y: 80, color: '#FFFF00'}, {x: 114, y: 80, color: '#FFD700'},
+                    {x: 94, y: 84, color: '#FFD700'}, {x: 98, y: 84, color: '#FFA500'}, {x: 102, y: 84, color: '#FFA500'}, {x: 106, y: 84, color: '#FFA500'}, {x: 110, y: 84, color: '#FFD700'},
+                    {x: 98, y: 88, color: '#FF8C00'}, {x: 102, y: 88, color: '#FF8C00'}, {x: 106, y: 88, color: '#FF8C00'},
+
+                    // Right tulip (yellow)
+                    {x: 174, y: 64, color: '#FFD700'}, {x: 178, y: 64, color: '#FFD700'}, {x: 182, y: 64, color: '#FFD700'},
+                    {x: 170, y: 68, color: '#FFD700'}, {x: 174, y: 68, color: '#FFFF00'}, {x: 178, y: 68, color: '#FFF8DC'}, {x: 182, y: 68, color: '#FFFF00'}, {x: 186, y: 68, color: '#FFD700'},
+                    {x: 166, y: 72, color: '#FFD700'}, {x: 170, y: 72, color: '#FFFF00'}, {x: 174, y: 72, color: '#FFF8DC'}, {x: 178, y: 72, color: '#FFFACD'}, {x: 182, y: 72, color: '#FFF8DC'}, {x: 186, y: 72, color: '#FFFF00'}, {x: 190, y: 72, color: '#FFD700'},
+                    {x: 166, y: 76, color: '#FFD700'}, {x: 170, y: 76, color: '#FFFF00'}, {x: 174, y: 76, color: '#FFF8DC'}, {x: 178, y: 76, color: '#FFFACD'}, {x: 182, y: 76, color: '#FFF8DC'}, {x: 186, y: 76, color: '#FFFF00'}, {x: 190, y: 76, color: '#FFD700'},
+                    {x: 166, y: 80, color: '#FFD700'}, {x: 170, y: 80, color: '#FFFF00'}, {x: 174, y: 80, color: '#FFF8DC'}, {x: 178, y: 80, color: '#FFF8DC'}, {x: 182, y: 80, color: '#FFF8DC'}, {x: 186, y: 80, color: '#FFFF00'}, {x: 190, y: 80, color: '#FFD700'},
+                    {x: 170, y: 84, color: '#FFD700'}, {x: 174, y: 84, color: '#FFA500'}, {x: 178, y: 84, color: '#FFA500'}, {x: 182, y: 84, color: '#FFA500'}, {x: 186, y: 84, color: '#FFD700'},
+                    {x: 174, y: 88, color: '#FF8C00'}, {x: 178, y: 88, color: '#FF8C00'}, {x: 182, y: 88, color: '#FF8C00'},
+
+                    // Far left tulip (red)
+                    {x: 66, y: 76, color: '#DC143C'}, {x: 70, y: 76, color: '#DC143C'}, {x: 74, y: 76, color: '#DC143C'},
+                    {x: 62, y: 80, color: '#DC143C'}, {x: 66, y: 80, color: '#FF0000'}, {x: 70, y: 80, color: '#FF6347'}, {x: 74, y: 80, color: '#FF0000'}, {x: 78, y: 80, color: '#DC143C'},
+                    {x: 58, y: 84, color: '#DC143C'}, {x: 62, y: 84, color: '#FF0000'}, {x: 66, y: 84, color: '#FF6347'}, {x: 70, y: 84, color: '#FFB6C1'}, {x: 74, y: 84, color: '#FF6347'}, {x: 78, y: 84, color: '#FF0000'}, {x: 82, y: 84, color: '#DC143C'},
+                    {x: 58, y: 88, color: '#DC143C'}, {x: 62, y: 88, color: '#FF0000'}, {x: 66, y: 88, color: '#FF6347'}, {x: 70, y: 88, color: '#FFB6C1'}, {x: 74, y: 88, color: '#FF6347'}, {x: 78, y: 88, color: '#FF0000'}, {x: 82, y: 88, color: '#DC143C'},
+                    {x: 62, y: 92, color: '#DC143C'}, {x: 66, y: 92, color: '#B22222'}, {x: 70, y: 92, color: '#B22222'}, {x: 74, y: 92, color: '#B22222'}, {x: 78, y: 92, color: '#DC143C'},
+                    {x: 66, y: 96, color: '#8B0000'}, {x: 70, y: 96, color: '#8B0000'}, {x: 74, y: 96, color: '#8B0000'},
+
+                    // Far right tulip (red)
+                    {x: 206, y: 76, color: '#DC143C'}, {x: 210, y: 76, color: '#DC143C'}, {x: 214, y: 76, color: '#DC143C'},
+                    {x: 202, y: 80, color: '#DC143C'}, {x: 206, y: 80, color: '#FF0000'}, {x: 210, y: 80, color: '#FF6347'}, {x: 214, y: 80, color: '#FF0000'}, {x: 218, y: 80, color: '#DC143C'},
+                    {x: 198, y: 84, color: '#DC143C'}, {x: 202, y: 84, color: '#FF0000'}, {x: 206, y: 84, color: '#FF6347'}, {x: 210, y: 84, color: '#FFB6C1'}, {x: 214, y: 84, color: '#FF6347'}, {x: 218, y: 84, color: '#FF0000'}, {x: 222, y: 84, color: '#DC143C'},
+                    {x: 198, y: 88, color: '#DC143C'}, {x: 202, y: 88, color: '#FF0000'}, {x: 206, y: 88, color: '#FF6347'}, {x: 210, y: 88, color: '#FFB6C1'}, {x: 214, y: 88, color: '#FF6347'}, {x: 218, y: 88, color: '#FF0000'}, {x: 222, y: 88, color: '#DC143C'},
+                    {x: 202, y: 92, color: '#DC143C'}, {x: 206, y: 92, color: '#B22222'}, {x: 210, y: 92, color: '#B22222'}, {x: 214, y: 92, color: '#B22222'}, {x: 218, y: 92, color: '#DC143C'},
+                    {x: 206, y: 96, color: '#8B0000'}, {x: 210, y: 96, color: '#8B0000'}, {x: 214, y: 96, color: '#8B0000'},
+
+                    // Additional tulips (middle layer)
+                    {x: 118, y: 60, color: '#FFA500'}, {x: 122, y: 60, color: '#FFA500'}, {x: 126, y: 60, color: '#FFA500'},
+                    {x: 114, y: 64, color: '#FFA500'}, {x: 118, y: 64, color: '#FFD700'}, {x: 122, y: 64, color: '#FFFF00'}, {x: 126, y: 64, color: '#FFD700'}, {x: 130, y: 64, color: '#FFA500'},
+                    {x: 114, y: 68, color: '#FFA500'}, {x: 118, y: 68, color: '#FFD700'}, {x: 122, y: 68, color: '#FFFF00'}, {x: 126, y: 68, color: '#FFD700'}, {x: 130, y: 68, color: '#FFA500'},
+                    {x: 118, y: 72, color: '#FF8C00'}, {x: 122, y: 72, color: '#FF8C00'}, {x: 126, y: 72, color: '#FF8C00'},
+
+                    {x: 154, y: 60, color: '#FFA500'}, {x: 158, y: 60, color: '#FFA500'}, {x: 162, y: 60, color: '#FFA500'},
+                    {x: 150, y: 64, color: '#FFA500'}, {x: 154, y: 64, color: '#FFD700'}, {x: 158, y: 64, color: '#FFFF00'}, {x: 162, y: 64, color: '#FFD700'}, {x: 166, y: 64, color: '#FFA500'},
+                    {x: 150, y: 68, color: '#FFA500'}, {x: 154, y: 68, color: '#FFD700'}, {x: 158, y: 68, color: '#FFFF00'}, {x: 162, y: 68, color: '#FFD700'}, {x: 166, y: 68, color: '#FFA500'},
+                    {x: 154, y: 72, color: '#FF8C00'}, {x: 158, y: 72, color: '#FF8C00'}, {x: 162, y: 72, color: '#FF8C00'},
+
+                    // Stems for all tulips
+                    {x: 68, y: 100, color: '#228B22'}, {x: 72, y: 100, color: '#228B22'},
+                    {x: 68, y: 104, color: '#228B22'}, {x: 72, y: 104, color: '#228B22'},
+                    {x: 68, y: 108, color: '#228B22'}, {x: 72, y: 108, color: '#228B22'},
+                    {x: 68, y: 112, color: '#228B22'}, {x: 72, y: 112, color: '#228B22'},
+                    {x: 68, y: 116, color: '#228B22'}, {x: 72, y: 116, color: '#228B22'},
+                    {x: 68, y: 120, color: '#228B22'}, {x: 72, y: 120, color: '#228B22'},
+                    {x: 68, y: 124, color: '#228B22'}, {x: 72, y: 124, color: '#228B22'},
+
+                    {x: 100, y: 92, color: '#228B22'}, {x: 104, y: 92, color: '#228B22'},
+                    {x: 100, y: 96, color: '#228B22'}, {x: 104, y: 96, color: '#228B22'},
+                    {x: 100, y: 100, color: '#228B22'}, {x: 104, y: 100, color: '#228B22'},
+                    {x: 100, y: 104, color: '#228B22'}, {x: 104, y: 104, color: '#228B22'},
+                    {x: 100, y: 108, color: '#228B22'}, {x: 104, y: 108, color: '#228B22'},
+                    {x: 100, y: 112, color: '#228B22'}, {x: 104, y: 112, color: '#228B22'},
+                    {x: 100, y: 116, color: '#228B22'}, {x: 104, y: 116, color: '#228B22'},
+                    {x: 100, y: 120, color: '#228B22'}, {x: 104, y: 120, color: '#228B22'},
+                    {x: 100, y: 124, color: '#228B22'}, {x: 104, y: 124, color: '#228B22'},
+                    {x: 100, y: 128, color: '#228B22'}, {x: 104, y: 128, color: '#228B22'},
+                    {x: 100, y: 132, color: '#228B22'}, {x: 104, y: 132, color: '#228B22'},
+                    {x: 100, y: 136, color: '#228B22'}, {x: 104, y: 136, color: '#228B22'},
+                    {x: 100, y: 140, color: '#228B22'}, {x: 104, y: 140, color: '#228B22'},
+
+                    {x: 120, y: 76, color: '#228B22'}, {x: 124, y: 76, color: '#228B22'},
+                    {x: 120, y: 80, color: '#228B22'}, {x: 124, y: 80, color: '#228B22'},
+                    {x: 120, y: 84, color: '#228B22'}, {x: 124, y: 84, color: '#228B22'},
+                    {x: 120, y: 88, color: '#228B22'}, {x: 124, y: 88, color: '#228B22'},
+                    {x: 120, y: 92, color: '#228B22'}, {x: 124, y: 92, color: '#228B22'},
+                    {x: 120, y: 96, color: '#228B22'}, {x: 124, y: 96, color: '#228B22'},
+                    {x: 120, y: 100, color: '#228B22'}, {x: 124, y: 100, color: '#228B22'},
+                    {x: 120, y: 104, color: '#228B22'}, {x: 124, y: 104, color: '#228B22'},
+                    {x: 120, y: 108, color: '#228B22'}, {x: 124, y: 108, color: '#228B22'},
+                    {x: 120, y: 112, color: '#228B22'}, {x: 124, y: 112, color: '#228B22'},
+                    {x: 120, y: 116, color: '#228B22'}, {x: 124, y: 116, color: '#228B22'},
+                    {x: 120, y: 120, color: '#228B22'}, {x: 124, y: 120, color: '#228B22'},
+                    {x: 120, y: 124, color: '#228B22'}, {x: 124, y: 124, color: '#228B22'},
+                    {x: 120, y: 128, color: '#228B22'}, {x: 124, y: 128, color: '#228B22'},
+                    {x: 120, y: 132, color: '#228B22'}, {x: 124, y: 132, color: '#228B22'},
+                    {x: 120, y: 136, color: '#228B22'}, {x: 124, y: 136, color: '#228B22'},
+                    {x: 120, y: 140, color: '#228B22'}, {x: 124, y: 140, color: '#228B22'},
+                    {x: 120, y: 144, color: '#228B22'}, {x: 124, y: 144, color: '#228B22'},
+                    {x: 120, y: 148, color: '#228B22'}, {x: 124, y: 148, color: '#228B22'},
+                    {x: 120, y: 152, color: '#228B22'}, {x: 124, y: 152, color: '#228B22'},
+                    {x: 120, y: 156, color: '#228B22'}, {x: 124, y: 156, color: '#228B22'},
+                    {x: 120, y: 160, color: '#228B22'}, {x: 124, y: 160, color: '#228B22'},
+
+                    // Central stem (tallest)
+                    {x: 140, y: 78, color: '#228B22'}, {x: 144, y: 78, color: '#228B22'},
+                    {x: 140, y: 82, color: '#228B22'}, {x: 144, y: 82, color: '#228B22'},
+                    {x: 140, y: 86, color: '#228B22'}, {x: 144, y: 86, color: '#228B22'},
+                    {x: 140, y: 90, color: '#228B22'}, {x: 144, y: 90, color: '#228B22'},
+                    {x: 140, y: 94, color: '#228B22'}, {x: 144, y: 94, color: '#228B22'},
+                    {x: 140, y: 98, color: '#228B22'}, {x: 144, y: 98, color: '#228B22'},
+                    {x: 140, y: 102, color: '#228B22'}, {x: 144, y: 102, color: '#228B22'},
+                    {x: 140, y: 106, color: '#228B22'}, {x: 144, y: 106, color: '#228B22'},
+                    {x: 140, y: 110, color: '#228B22'}, {x: 144, y: 110, color: '#228B22'},
+                    {x: 140, y: 114, color: '#228B22'}, {x: 144, y: 114, color: '#228B22'},
+                    {x: 140, y: 118, color: '#228B22'}, {x: 144, y: 118, color: '#228B22'},
+                    {x: 140, y: 122, color: '#228B22'}, {x: 144, y: 122, color: '#228B22'},
+                    {x: 140, y: 126, color: '#228B22'}, {x: 144, y: 126, color: '#228B22'},
+                    {x: 140, y: 130, color: '#228B22'}, {x: 144, y: 130, color: '#228B22'},
+                    {x: 140, y: 134, color: '#228B22'}, {x: 144, y: 134, color: '#228B22'},
+                    {x: 140, y: 138, color: '#228B22'}, {x: 144, y: 138, color: '#228B22'},
+                    {x: 140, y: 142, color: '#228B22'}, {x: 144, y: 142, color: '#228B22'},
+                    {x: 140, y: 146, color: '#228B22'}, {x: 144, y: 146, color: '#228B22'},
+                    {x: 140, y: 150, color: '#228B22'}, {x: 144, y: 150, color: '#228B22'},
+                    {x: 140, y: 154, color: '#228B22'}, {x: 144, y: 154, color: '#228B22'},
+                    {x: 140, y: 158, color: '#228B22'}, {x: 144, y: 158, color: '#228B22'},
+                    {x: 140, y: 162, color: '#228B22'}, {x: 144, y: 162, color: '#228B22'},
+                    {x: 140, y: 166, color: '#228B22'}, {x: 144, y: 166, color: '#228B22'},
+                    {x: 140, y: 170, color: '#228B22'}, {x: 144, y: 170, color: '#228B22'},
+                    {x: 140, y: 174, color: '#228B22'}, {x: 144, y: 174, color: '#228B22'},
+                    {x: 140, y: 178, color: '#228B22'}, {x: 144, y: 178, color: '#228B22'},
+                    {x: 140, y: 182, color: '#228B22'}, {x: 144, y: 182, color: '#228B22'},
+                    {x: 140, y: 186, color: '#228B22'}, {x: 144, y: 186, color: '#228B22'},
+                    {x: 140, y: 190, color: '#228B22'}, {x: 144, y: 190, color: '#228B22'},
+
+                    {x: 156, y: 76, color: '#228B22'}, {x: 160, y: 76, color: '#228B22'},
+                    {x: 156, y: 80, color: '#228B22'}, {x: 160, y: 80, color: '#228B22'},
+                    {x: 156, y: 84, color: '#228B22'}, {x: 160, y: 84, color: '#228B22'},
+                    {x: 156, y: 88, color: '#228B22'}, {x: 160, y: 88, color: '#228B22'},
+                    {x: 156, y: 92, color: '#228B22'}, {x: 160, y: 92, color: '#228B22'},
+                    {x: 156, y: 96, color: '#228B22'}, {x: 160, y: 96, color: '#228B22'},
+                    {x: 156, y: 100, color: '#228B22'}, {x: 160, y: 100, color: '#228B22'},
+                    {x: 156, y: 104, color: '#228B22'}, {x: 160, y: 104, color: '#228B22'},
+                    {x: 156, y: 108, color: '#228B22'}, {x: 160, y: 108, color: '#228B22'},
+                    {x: 156, y: 112, color: '#228B22'}, {x: 160, y: 112, color: '#228B22'},
+                    {x: 156, y: 116, color: '#228B22'}, {x: 160, y: 116, color: '#228B22'},
+                    {x: 156, y: 120, color: '#228B22'}, {x: 160, y: 120, color: '#228B22'},
+                    {x: 156, y: 124, color: '#228B22'}, {x: 160, y: 124, color: '#228B22'},
+                    {x: 156, y: 128, color: '#228B22'}, {x: 160, y: 128, color: '#228B22'},
+                    {x: 156, y: 132, color: '#228B22'}, {x: 160, y: 132, color: '#228B22'},
+                    {x: 156, y: 136, color: '#228B22'}, {x: 160, y: 136, color: '#228B22'},
+                    {x: 156, y: 140, color: '#228B22'}, {x: 160, y: 140, color: '#228B22'},
+                    {x: 156, y: 144, color: '#228B22'}, {x: 160, y: 144, color: '#228B22'},
+                    {x: 156, y: 148, color: '#228B22'}, {x: 160, y: 148, color: '#228B22'},
+
+                    {x: 176, y: 92, color: '#228B22'}, {x: 180, y: 92, color: '#228B22'},
+                    {x: 176, y: 96, color: '#228B22'}, {x: 180, y: 96, color: '#228B22'},
+                    {x: 176, y: 100, color: '#228B22'}, {x: 180, y: 100, color: '#228B22'},
+                    {x: 176, y: 104, color: '#228B22'}, {x: 180, y: 104, color: '#228B22'},
+                    {x: 176, y: 108, color: '#228B22'}, {x: 180, y: 108, color: '#228B22'},
+                    {x: 176, y: 112, color: '#228B22'}, {x: 180, y: 112, color: '#228B22'},
+                    {x: 176, y: 116, color: '#228B22'}, {x: 180, y: 116, color: '#228B22'},
+                    {x: 176, y: 120, color: '#228B22'}, {x: 180, y: 120, color: '#228B22'},
+                    {x: 176, y: 124, color: '#228B22'}, {x: 180, y: 124, color: '#228B22'},
+                    {x: 176, y: 128, color: '#228B22'}, {x: 180, y: 128, color: '#228B22'},
+                    {x: 176, y: 132, color: '#228B22'}, {x: 180, y: 132, color: '#228B22'},
+                    {x: 176, y: 136, color: '#228B22'}, {x: 180, y: 136, color: '#228B22'},
+                    {x: 176, y: 140, color: '#228B22'}, {x: 180, y: 140, color: '#228B22'},
+
+                    {x: 208, y: 100, color: '#228B22'}, {x: 212, y: 100, color: '#228B22'},
+                    {x: 208, y: 104, color: '#228B22'}, {x: 212, y: 104, color: '#228B22'},
+                    {x: 208, y: 108, color: '#228B22'}, {x: 212, y: 108, color: '#228B22'},
+                    {x: 208, y: 112, color: '#228B22'}, {x: 212, y: 112, color: '#228B22'},
+                    {x: 208, y: 116, color: '#228B22'}, {x: 212, y: 116, color: '#228B22'},
+                    {x: 208, y: 120, color: '#228B22'}, {x: 212, y: 120, color: '#228B22'},
+                    {x: 208, y: 124, color: '#228B22'}, {x: 212, y: 124, color: '#228B22'},
+
+                    // Leaves scattered throughout
+                    {x: 82, y: 76, color: '#32CD32'}, {x: 86, y: 80, color: '#228B22'}, {x: 90, y: 84, color: '#32CD32'},
+                    {x: 110, y: 56, color: '#32CD32'}, {x: 114, y: 60, color: '#228B22'}, {x: 118, y: 64, color: '#32CD32'},
+                    {x: 130, y: 52, color: '#32CD32'}, {x: 134, y: 56, color: '#228B22'}, {x: 138, y: 60, color: '#32CD32'},
+                    {x: 150, y: 52, color: '#32CD32'}, {x: 154, y: 56, color: '#228B22'}, {x: 158, y: 60, color: '#32CD32'},
+                    {x: 166, y: 56, color: '#32CD32'}, {x: 170, y: 60, color: '#228B22'}, {x: 174, y: 64, color: '#32CD32'},
+                    {x: 194, y: 76, color: '#32CD32'}, {x: 198, y: 80, color: '#228B22'}, {x: 202, y: 84, color: '#32CD32'},
+                    {x: 86, y: 120, color: '#32CD32'}, {x: 90, y: 124, color: '#228B22'}, {x: 94, y: 128, color: '#32CD32'},
+                    {x: 106, y: 140, color: '#32CD32'}, {x: 110, y: 144, color: '#228B22'}, {x: 114, y: 148, color: '#32CD32'},
+                    {x: 126, y: 164, color: '#32CD32'}, {x: 130, y: 168, color: '#228B22'}, {x: 134, y: 172, color: '#32CD32'},
+                    {x: 150, y: 152, color: '#32CD32'}, {x: 154, y: 156, color: '#228B22'}, {x: 158, y: 160, color: '#32CD32'},
+                    {x: 166, y: 144, color: '#32CD32'}, {x: 170, y: 148, color: '#228B22'}, {x: 174, y: 152, color: '#32CD32'},
+                    {x: 186, y: 144, color: '#32CD32'}, {x: 190, y: 148, color: '#228B22'}, {x: 194, y: 152, color: '#32CD32'},
+
+                    // Bundle wrapping - gathered stems
+                    {x: 120, y: 194, color: '#228B22'}, {x: 124, y: 194, color: '#228B22'}, {x: 128, y: 194, color: '#228B22'}, {x: 132, y: 194, color: '#228B22'}, {x: 136, y: 194, color: '#228B22'},
+                    {x: 140, y: 194, color: '#228B22'}, {x: 144, y: 194, color: '#228B22'}, {x: 148, y: 194, color: '#228B22'}, {x: 152, y: 194, color: '#228B22'}, {x: 156, y: 194, color: '#228B22'}, {x: 160, y: 194, color: '#228B22'}, {x: 164, y: 194, color: '#228B22'},
+                    {x: 120, y: 198, color: '#228B22'}, {x: 124, y: 198, color: '#228B22'}, {x: 128, y: 198, color: '#228B22'}, {x: 132, y: 198, color: '#228B22'}, {x: 136, y: 198, color: '#228B22'},
+                    {x: 140, y: 198, color: '#228B22'}, {x: 144, y: 198, color: '#228B22'}, {x: 148, y: 198, color: '#228B22'}, {x: 152, y: 198, color: '#228B22'}, {x: 156, y: 198, color: '#228B22'}, {x: 160, y: 198, color: '#228B22'}, {x: 164, y: 198, color: '#228B22'},
+                    {x: 120, y: 202, color: '#228B22'}, {x: 124, y: 202, color: '#228B22'}, {x: 128, y: 202, color: '#228B22'}, {x: 132, y: 202, color: '#228B22'}, {x: 136, y: 202, color: '#228B22'},
+                    {x: 140, y: 202, color: '#228B22'}, {x: 144, y: 202, color: '#228B22'}, {x: 148, y: 202, color: '#228B22'}, {x: 152, y: 202, color: '#228B22'}, {x: 156, y: 202, color: '#228B22'}, {x: 160, y: 202, color: '#228B22'}, {x: 164, y: 202, color: '#228B22'},
+
+                    // Black ribbon wrapping
+                    {x: 118, y: 206, color: '#2F4F4F'}, {x: 122, y: 206, color: '#2F4F4F'}, {x: 126, y: 206, color: '#2F4F4F'}, {x: 158, y: 206, color: '#2F4F4F'}, {x: 162, y: 206, color: '#2F4F4F'}, {x: 166, y: 206, color: '#2F4F4F'},
+                    {x: 114, y: 210, color: '#2F4F4F'}, {x: 118, y: 210, color: '#000000'}, {x: 122, y: 210, color: '#000000'}, {x: 126, y: 210, color: '#000000'}, {x: 158, y: 210, color: '#000000'}, {x: 162, y: 210, color: '#000000'}, {x: 166, y: 210, color: '#000000'}, {x: 170, y: 210, color: '#2F4F4F'},
+                    {x: 110, y: 214, color: '#2F4F4F'}, {x: 114, y: 214, color: '#000000'}, {x: 118, y: 214, color: '#000000'}, {x: 122, y: 214, color: '#000000'}, {x: 162, y: 214, color: '#000000'}, {x: 166, y: 214, color: '#000000'}, {x: 170, y: 214, color: '#000000'}, {x: 174, y: 214, color: '#2F4F4F'},
+                    {x: 114, y: 218, color: '#2F4F4F'}, {x: 118, y: 218, color: '#000000'}, {x: 122, y: 218, color: '#000000'}, {x: 126, y: 218, color: '#000000'}, {x: 158, y: 218, color: '#000000'}, {x: 162, y: 218, color: '#000000'}, {x: 166, y: 218, color: '#000000'}, {x: 170, y: 218, color: '#2F4F4F'},
+                    {x: 118, y: 222, color: '#2F4F4F'}, {x: 122, y: 222, color: '#2F4F4F'}, {x: 126, y: 222, color: '#2F4F4F'}, {x: 158, y: 222, color: '#2F4F4F'}, {x: 162, y: 222, color: '#2F4F4F'}, {x: 166, y: 222, color: '#2F4F4F'},
+
+                    // Extended stem bundle
+                    {x: 136, y: 226, color: '#228B22'}, {x: 140, y: 226, color: '#228B22'}, {x: 144, y: 226, color: '#228B22'}, {x: 148, y: 226, color: '#228B22'},
+                    {x: 136, y: 230, color: '#228B22'}, {x: 140, y: 230, color: '#228B22'}, {x: 144, y: 230, color: '#228B22'}, {x: 148, y: 230, color: '#228B22'},
+                    {x: 136, y: 234, color: '#228B22'}, {x: 140, y: 234, color: '#228B22'}, {x: 144, y: 234, color: '#228B22'}, {x: 148, y: 234, color: '#228B22'},
+                    {x: 136, y: 238, color: '#228B22'}, {x: 140, y: 238, color: '#228B22'}, {x: 144, y: 238, color: '#228B22'}, {x: 148, y: 238, color: '#228B22'},
+                    {x: 136, y: 242, color: '#228B22'}, {x: 140, y: 242, color: '#228B22'}, {x: 144, y: 242, color: '#228B22'}, {x: 148, y: 242, color: '#228B22'},
+                    {x: 136, y: 246, color: '#228B22'}, {x: 140, y: 246, color: '#228B22'}, {x: 144, y: 246, color: '#228B22'}, {x: 148, y: 246, color: '#228B22'},
+                    {x: 136, y: 250, color: '#228B22'}, {x: 140, y: 250, color: '#228B22'}, {x: 144, y: 250, color: '#228B22'}, {x: 148, y: 250, color: '#228B22'},
+
+                    // Final black ribbon accent
+                    {x: 130, y: 254, color: '#2F4F4F'}, {x: 134, y: 254, color: '#000000'}, {x: 138, y: 254, color: '#000000'}, {x: 142, y: 254, color: '#000000'}, {x: 146, y: 254, color: '#000000'}, {x: 150, y: 254, color: '#000000'}, {x: 154, y: 254, color: '#2F4F4F'},
+                    {x: 130, y: 258, color: '#000000'}, {x: 134, y: 258, color: '#000000'}, {x: 138, y: 258, color: '#2F4F4F'}, {x: 142, y: 258, color: '#2F4F4F'}, {x: 146, y: 258, color: '#2F4F4F'}, {x: 150, y: 258, color: '#000000'}, {x: 154, y: 258, color: '#000000'},
+                    {x: 130, y: 262, color: '#2F4F4F'}, {x: 134, y: 262, color: '#000000'}, {x: 138, y: 262, color: '#000000'}, {x: 142, y: 262, color: '#000000'}, {x: 146, y: 262, color: '#000000'}, {x: 150, y: 262, color: '#000000'}, {x: 154, y: 262, color: '#2F4F4F'}
+                ]
+            },
+            sunflowers: {
+                pixels: [
+                    // Large central sunflower
+                    // Outer petals (bright yellow)
+                    {x: 126, y: 52, color: '#FFD700'}, {x: 130, y: 50, color: '#FFD700'}, {x: 134, y: 48, color: '#FFD700'}, {x: 138, y: 48, color: '#FFD700'}, {x: 142, y: 48, color: '#FFD700'}, {x: 146, y: 48, color: '#FFD700'}, {x: 150, y: 50, color: '#FFD700'}, {x: 154, y: 52, color: '#FFD700'},
+                    {x: 122, y: 56, color: '#FFD700'}, {x: 126, y: 54, color: '#FFFF00'}, {x: 130, y: 52, color: '#FFFF00'}, {x: 134, y: 50, color: '#FFFF00'}, {x: 146, y: 50, color: '#FFFF00'}, {x: 150, y: 52, color: '#FFFF00'}, {x: 154, y: 54, color: '#FFFF00'}, {x: 158, y: 56, color: '#FFD700'},
+                    {x: 118, y: 60, color: '#FFD700'}, {x: 122, y: 58, color: '#FFFF00'}, {x: 126, y: 56, color: '#FFFF00'}, {x: 130, y: 54, color: '#FFFF00'}, {x: 150, y: 54, color: '#FFFF00'}, {x: 154, y: 56, color: '#FFFF00'}, {x: 158, y: 58, color: '#FFFF00'}, {x: 162, y: 60, color: '#FFD700'},
+                    {x: 116, y: 64, color: '#FFD700'}, {x: 120, y: 62, color: '#FFFF00'}, {x: 124, y: 60, color: '#FFFF00'}, {x: 156, y: 60, color: '#FFFF00'}, {x: 160, y: 62, color: '#FFFF00'}, {x: 164, y: 64, color: '#FFD700'},
+                    {x: 114, y: 68, color: '#FFD700'}, {x: 118, y: 66, color: '#FFFF00'}, {x: 122, y: 64, color: '#FFFF00'}, {x: 158, y: 64, color: '#FFFF00'}, {x: 162, y: 66, color: '#FFFF00'}, {x: 166, y: 68, color: '#FFD700'},
+                    {x: 114, y: 72, color: '#FFD700'}, {x: 118, y: 70, color: '#FFFF00'}, {x: 122, y: 68, color: '#FFFF00'}, {x: 158, y: 68, color: '#FFFF00'}, {x: 162, y: 70, color: '#FFFF00'}, {x: 166, y: 72, color: '#FFD700'},
+                    {x: 116, y: 76, color: '#FFD700'}, {x: 120, y: 74, color: '#FFFF00'}, {x: 124, y: 72, color: '#FFFF00'}, {x: 156, y: 72, color: '#FFFF00'}, {x: 160, y: 74, color: '#FFFF00'}, {x: 164, y: 76, color: '#FFD700'},
+                    {x: 118, y: 80, color: '#FFD700'}, {x: 122, y: 78, color: '#FFFF00'}, {x: 126, y: 76, color: '#FFFF00'}, {x: 154, y: 76, color: '#FFFF00'}, {x: 158, y: 78, color: '#FFFF00'}, {x: 162, y: 80, color: '#FFD700'},
+                    {x: 122, y: 84, color: '#FFD700'}, {x: 126, y: 82, color: '#FFFF00'}, {x: 130, y: 80, color: '#FFFF00'}, {x: 150, y: 80, color: '#FFFF00'}, {x: 154, y: 82, color: '#FFFF00'}, {x: 158, y: 84, color: '#FFD700'},
+                    {x: 126, y: 88, color: '#FFD700'}, {x: 130, y: 86, color: '#FFD700'}, {x: 134, y: 84, color: '#FFD700'}, {x: 146, y: 84, color: '#FFD700'}, {x: 150, y: 86, color: '#FFD700'}, {x: 154, y: 88, color: '#FFD700'},
+
+                    // Center of sunflower (dark brown/black)
+                    {x: 134, y: 60, color: '#8B4513'}, {x: 138, y: 60, color: '#654321'}, {x: 142, y: 60, color: '#654321'}, {x: 146, y: 60, color: '#8B4513'},
+                    {x: 132, y: 64, color: '#8B4513'}, {x: 136, y: 64, color: '#654321'}, {x: 140, y: 64, color: '#2F1B14'}, {x: 144, y: 64, color: '#2F1B14'}, {x: 148, y: 64, color: '#8B4513'},
+                    {x: 130, y: 68, color: '#8B4513'}, {x: 134, y: 68, color: '#654321'}, {x: 138, y: 68, color: '#2F1B14'}, {x: 142, y: 68, color: '#2F1B14'}, {x: 146, y: 68, color: '#654321'}, {x: 150, y: 68, color: '#8B4513'},
+                    {x: 130, y: 72, color: '#8B4513'}, {x: 134, y: 72, color: '#654321'}, {x: 138, y: 72, color: '#2F1B14'}, {x: 142, y: 72, color: '#2F1B14'}, {x: 146, y: 72, color: '#654321'}, {x: 150, y: 72, color: '#8B4513'},
+                    {x: 132, y: 76, color: '#8B4513'}, {x: 136, y: 76, color: '#654321'}, {x: 140, y: 76, color: '#2F1B14'}, {x: 144, y: 76, color: '#2F1B14'}, {x: 148, y: 76, color: '#8B4513'},
+                    {x: 134, y: 80, color: '#8B4513'}, {x: 138, y: 80, color: '#654321'}, {x: 142, y: 80, color: '#654321'}, {x: 146, y: 80, color: '#8B4513'},
+
+                    // Left sunflower (smaller)
+                    // Petals
+                    {x: 82, y: 68, color: '#FFD700'}, {x: 86, y: 66, color: '#FFD700'}, {x: 90, y: 64, color: '#FFD700'}, {x: 94, y: 64, color: '#FFD700'}, {x: 98, y: 66, color: '#FFD700'}, {x: 102, y: 68, color: '#FFD700'},
+                    {x: 78, y: 72, color: '#FFD700'}, {x: 82, y: 70, color: '#FFFF00'}, {x: 86, y: 68, color: '#FFFF00'}, {x: 90, y: 66, color: '#FFFF00'}, {x: 94, y: 66, color: '#FFFF00'}, {x: 98, y: 68, color: '#FFFF00'}, {x: 102, y: 70, color: '#FFFF00'}, {x: 106, y: 72, color: '#FFD700'},
+                    {x: 76, y: 76, color: '#FFD700'}, {x: 80, y: 74, color: '#FFFF00'}, {x: 84, y: 72, color: '#FFFF00'}, {x: 100, y: 72, color: '#FFFF00'}, {x: 104, y: 74, color: '#FFFF00'}, {x: 108, y: 76, color: '#FFD700'},
+                    {x: 76, y: 80, color: '#FFD700'}, {x: 80, y: 78, color: '#FFFF00'}, {x: 84, y: 76, color: '#FFFF00'}, {x: 100, y: 76, color: '#FFFF00'}, {x: 104, y: 78, color: '#FFFF00'}, {x: 108, y: 80, color: '#FFD700'},
+                    {x: 78, y: 84, color: '#FFD700'}, {x: 82, y: 82, color: '#FFFF00'}, {x: 86, y: 80, color: '#FFFF00'}, {x: 98, y: 80, color: '#FFFF00'}, {x: 102, y: 82, color: '#FFFF00'}, {x: 106, y: 84, color: '#FFD700'},
+                    {x: 82, y: 88, color: '#FFD700'}, {x: 86, y: 86, color: '#FFD700'}, {x: 90, y: 84, color: '#FFD700'}, {x: 94, y: 84, color: '#FFD700'}, {x: 98, y: 86, color: '#FFD700'}, {x: 102, y: 88, color: '#FFD700'},
+                    // Center
+                    {x: 88, y: 74, color: '#8B4513'}, {x: 92, y: 74, color: '#654321'}, {x: 96, y: 74, color: '#8B4513'},
+                    {x: 86, y: 78, color: '#8B4513'}, {x: 90, y: 78, color: '#654321'}, {x: 94, y: 78, color: '#2F1B14'}, {x: 98, y: 78, color: '#8B4513'},
+                    {x: 88, y: 82, color: '#8B4513'}, {x: 92, y: 82, color: '#654321'}, {x: 96, y: 82, color: '#8B4513'},
+
+                    // Right sunflower (smaller)
+                    // Petals
+                    {x: 178, y: 76, color: '#FFD700'}, {x: 182, y: 74, color: '#FFD700'}, {x: 186, y: 72, color: '#FFD700'}, {x: 190, y: 72, color: '#FFD700'}, {x: 194, y: 74, color: '#FFD700'}, {x: 198, y: 76, color: '#FFD700'},
+                    {x: 174, y: 80, color: '#FFD700'}, {x: 178, y: 78, color: '#FFFF00'}, {x: 182, y: 76, color: '#FFFF00'}, {x: 186, y: 74, color: '#FFFF00'}, {x: 190, y: 74, color: '#FFFF00'}, {x: 194, y: 76, color: '#FFFF00'}, {x: 198, y: 78, color: '#FFFF00'}, {x: 202, y: 80, color: '#FFD700'},
+                    {x: 172, y: 84, color: '#FFD700'}, {x: 176, y: 82, color: '#FFFF00'}, {x: 180, y: 80, color: '#FFFF00'}, {x: 196, y: 80, color: '#FFFF00'}, {x: 200, y: 82, color: '#FFFF00'}, {x: 204, y: 84, color: '#FFD700'},
+                    {x: 172, y: 88, color: '#FFD700'}, {x: 176, y: 86, color: '#FFFF00'}, {x: 180, y: 84, color: '#FFFF00'}, {x: 196, y: 84, color: '#FFFF00'}, {x: 200, y: 86, color: '#FFFF00'}, {x: 204, y: 88, color: '#FFD700'},
+                    {x: 174, y: 92, color: '#FFD700'}, {x: 178, y: 90, color: '#FFFF00'}, {x: 182, y: 88, color: '#FFFF00'}, {x: 194, y: 88, color: '#FFFF00'}, {x: 198, y: 90, color: '#FFFF00'}, {x: 202, y: 92, color: '#FFD700'},
+                    {x: 178, y: 96, color: '#FFD700'}, {x: 182, y: 94, color: '#FFD700'}, {x: 186, y: 92, color: '#FFD700'}, {x: 190, y: 92, color: '#FFD700'}, {x: 194, y: 94, color: '#FFD700'}, {x: 198, y: 96, color: '#FFD700'},
+                    // Center
+                    {x: 184, y: 82, color: '#8B4513'}, {x: 188, y: 82, color: '#654321'}, {x: 192, y: 82, color: '#8B4513'},
+                    {x: 182, y: 86, color: '#8B4513'}, {x: 186, y: 86, color: '#654321'}, {x: 190, y: 86, color: '#2F1B14'}, {x: 194, y: 86, color: '#8B4513'},
+                    {x: 184, y: 90, color: '#8B4513'}, {x: 188, y: 90, color: '#654321'}, {x: 192, y: 90, color: '#8B4513'},
+
+                    // Back sunflower (partial, behind center)
+                    {x: 116, y: 44, color: '#FFD700'}, {x: 120, y: 42, color: '#FFD700'}, {x: 124, y: 40, color: '#FFD700'}, {x: 128, y: 40, color: '#FFD700'},
+                    {x: 112, y: 48, color: '#FFD700'}, {x: 116, y: 46, color: '#FFFF00'}, {x: 120, y: 44, color: '#FFFF00'}, {x: 124, y: 42, color: '#FFFF00'}, {x: 128, y: 42, color: '#FFFF00'},
+                    {x: 110, y: 52, color: '#FFD700'}, {x: 114, y: 50, color: '#FFFF00'}, {x: 118, y: 48, color: '#FFFF00'}, {x: 122, y: 46, color: '#FFFF00'},
+                    {x: 110, y: 56, color: '#FFD700'}, {x: 114, y: 54, color: '#FFFF00'}, {x: 118, y: 52, color: '#FFFF00'},
+                    {x: 112, y: 60, color: '#FFD700'}, {x: 116, y: 58, color: '#FFD700'}, {x: 120, y: 56, color: '#FFD700'},
+                    {x: 118, y: 50, color: '#8B4513'}, {x: 122, y: 50, color: '#654321'}, {x: 126, y: 50, color: '#8B4513'},
+                    {x: 116, y: 54, color: '#8B4513'}, {x: 120, y: 54, color: '#654321'}, {x: 124, y: 54, color: '#2F1B14'}, {x: 128, y: 54, color: '#8B4513'},
+
+                    // Additional partial sunflower (right back)
+                    {x: 156, y: 40, color: '#FFD700'}, {x: 160, y: 38, color: '#FFD700'}, {x: 164, y: 36, color: '#FFD700'}, {x: 168, y: 36, color: '#FFD700'},
+                    {x: 152, y: 44, color: '#FFD700'}, {x: 156, y: 42, color: '#FFFF00'}, {x: 160, y: 40, color: '#FFFF00'}, {x: 164, y: 38, color: '#FFFF00'}, {x: 168, y: 38, color: '#FFFF00'},
+                    {x: 150, y: 48, color: '#FFD700'}, {x: 154, y: 46, color: '#FFFF00'}, {x: 158, y: 44, color: '#FFFF00'}, {x: 162, y: 42, color: '#FFFF00'},
+                    {x: 150, y: 52, color: '#FFD700'}, {x: 154, y: 50, color: '#FFFF00'}, {x: 158, y: 48, color: '#FFFF00'},
+                    {x: 152, y: 56, color: '#FFD700'}, {x: 156, y: 54, color: '#FFD700'}, {x: 160, y: 52, color: '#FFD700'},
+                    {x: 158, y: 46, color: '#8B4513'}, {x: 162, y: 46, color: '#654321'}, {x: 166, y: 46, color: '#8B4513'},
+                    {x: 156, y: 50, color: '#8B4513'}, {x: 160, y: 50, color: '#654321'}, {x: 164, y: 50, color: '#2F1B14'}, {x: 168, y: 50, color: '#8B4513'},
+
+                    // Leaves scattered throughout
+                    {x: 70, y: 82, color: '#228B22'}, {x: 74, y: 86, color: '#32CD32'}, {x: 78, y: 90, color: '#228B22'},
+                    {x: 110, y: 88, color: '#228B22'}, {x: 114, y: 92, color: '#32CD32'}, {x: 118, y: 96, color: '#228B22'},
+                    {x: 162, y: 92, color: '#228B22'}, {x: 166, y: 96, color: '#32CD32'}, {x: 170, y: 100, color: '#228B22'},
+                    {x: 206, y: 86, color: '#228B22'}, {x: 210, y: 90, color: '#32CD32'}, {x: 214, y: 94, color: '#228B22'},
+                    {x: 104, y: 50, color: '#228B22'}, {x: 108, y: 54, color: '#32CD32'}, {x: 174, y: 44, color: '#228B22'}, {x: 178, y: 48, color: '#32CD32'},
+
+                    // Main stems
+                    {x: 92, y: 92, color: '#228B22'}, {x: 92, y: 96, color: '#228B22'}, {x: 92, y: 100, color: '#228B22'}, {x: 92, y: 104, color: '#228B22'},
+                    {x: 92, y: 108, color: '#228B22'}, {x: 92, y: 112, color: '#228B22'}, {x: 92, y: 116, color: '#228B22'}, {x: 92, y: 120, color: '#228B22'},
+                    {x: 92, y: 124, color: '#228B22'}, {x: 92, y: 128, color: '#228B22'}, {x: 92, y: 132, color: '#228B22'}, {x: 92, y: 136, color: '#228B22'},
+                    {x: 92, y: 140, color: '#228B22'}, {x: 92, y: 144, color: '#228B22'}, {x: 92, y: 148, color: '#228B22'}, {x: 92, y: 152, color: '#228B22'},
+
+                    // Central stem (tallest)
+                    {x: 140, y: 92, color: '#228B22'}, {x: 140, y: 96, color: '#228B22'}, {x: 140, y: 100, color: '#228B22'}, {x: 140, y: 104, color: '#228B22'},
+                    {x: 140, y: 108, color: '#228B22'}, {x: 140, y: 112, color: '#228B22'}, {x: 140, y: 116, color: '#228B22'}, {x: 140, y: 120, color: '#228B22'},
+                    {x: 140, y: 124, color: '#228B22'}, {x: 140, y: 128, color: '#228B22'}, {x: 140, y: 132, color: '#228B22'}, {x: 140, y: 136, color: '#228B22'},
+                    {x: 140, y: 140, color: '#228B22'}, {x: 140, y: 144, color: '#228B22'}, {x: 140, y: 148, color: '#228B22'}, {x: 140, y: 152, color: '#228B22'},
+                    {x: 140, y: 156, color: '#228B22'}, {x: 140, y: 160, color: '#228B22'}, {x: 140, y: 164, color: '#228B22'}, {x: 140, y: 168, color: '#228B22'},
+                    {x: 140, y: 172, color: '#228B22'}, {x: 140, y: 176, color: '#228B22'}, {x: 140, y: 180, color: '#228B22'}, {x: 140, y: 184, color: '#228B22'},
+                    {x: 140, y: 188, color: '#228B22'}, {x: 140, y: 192, color: '#228B22'}, {x: 140, y: 196, color: '#228B22'}, {x: 140, y: 200, color: '#228B22'},
+
+                    {x: 188, y: 100, color: '#228B22'}, {x: 188, y: 104, color: '#228B22'}, {x: 188, y: 108, color: '#228B22'}, {x: 188, y: 112, color: '#228B22'},
+                    {x: 188, y: 116, color: '#228B22'}, {x: 188, y: 120, color: '#228B22'}, {x: 188, y: 124, color: '#228B22'}, {x: 188, y: 128, color: '#228B22'},
+                    {x: 188, y: 132, color: '#228B22'}, {x: 188, y: 136, color: '#228B22'}, {x: 188, y: 140, color: '#228B22'}, {x: 188, y: 144, color: '#228B22'},
+                    {x: 188, y: 148, color: '#228B22'}, {x: 188, y: 152, color: '#228B22'}, {x: 188, y: 156, color: '#228B22'}, {x: 188, y: 160, color: '#228B22'},
+
+                    // Gather stems together
+                    {x: 120, y: 204, color: '#228B22'}, {x: 124, y: 204, color: '#228B22'}, {x: 128, y: 204, color: '#228B22'}, {x: 132, y: 204, color: '#228B22'},
+                    {x: 136, y: 204, color: '#228B22'}, {x: 140, y: 204, color: '#228B22'}, {x: 144, y: 204, color: '#228B22'}, {x: 148, y: 204, color: '#228B22'},
+                    {x: 152, y: 204, color: '#228B22'}, {x: 156, y: 204, color: '#228B22'}, {x: 160, y: 204, color: '#228B22'}, {x: 164, y: 204, color: '#228B22'},
+                    {x: 120, y: 208, color: '#228B22'}, {x: 124, y: 208, color: '#228B22'}, {x: 128, y: 208, color: '#228B22'}, {x: 132, y: 208, color: '#228B22'},
+                    {x: 136, y: 208, color: '#228B22'}, {x: 140, y: 208, color: '#228B22'}, {x: 144, y: 208, color: '#228B22'}, {x: 148, y: 208, color: '#228B22'},
+                    {x: 152, y: 208, color: '#228B22'}, {x: 156, y: 208, color: '#228B22'}, {x: 160, y: 208, color: '#228B22'}, {x: 164, y: 208, color: '#228B22'},
+                    {x: 120, y: 212, color: '#228B22'}, {x: 124, y: 212, color: '#228B22'}, {x: 128, y: 212, color: '#228B22'}, {x: 132, y: 212, color: '#228B22'},
+                    {x: 136, y: 212, color: '#228B22'}, {x: 140, y: 212, color: '#228B22'}, {x: 144, y: 212, color: '#228B22'}, {x: 148, y: 212, color: '#228B22'},
+                    {x: 152, y: 212, color: '#228B22'}, {x: 156, y: 212, color: '#228B22'}, {x: 160, y: 212, color: '#228B22'}, {x: 164, y: 212, color: '#228B22'},
+
+                    // Burlap/twine wrapping (brown/tan)
+                    {x: 116, y: 216, color: '#D2B48C'}, {x: 120, y: 216, color: '#D2B48C'}, {x: 124, y: 216, color: '#D2B48C'}, {x: 160, y: 216, color: '#D2B48C'}, {x: 164, y: 216, color: '#D2B48C'}, {x: 168, y: 216, color: '#D2B48C'},
+                    {x: 112, y: 220, color: '#D2B48C'}, {x: 116, y: 220, color: '#DEB887'}, {x: 120, y: 220, color: '#F5DEB3'}, {x: 124, y: 220, color: '#DEB887'}, {x: 160, y: 220, color: '#DEB887'}, {x: 164, y: 220, color: '#F5DEB3'}, {x: 168, y: 220, color: '#DEB887'}, {x: 172, y: 220, color: '#D2B48C'},
+                    {x: 108, y: 224, color: '#D2B48C'}, {x: 112, y: 224, color: '#DEB887'}, {x: 116, y: 224, color: '#F5DEB3'}, {x: 120, y: 224, color: '#DEB887'}, {x: 164, y: 224, color: '#DEB887'}, {x: 168, y: 224, color: '#F5DEB3'}, {x: 172, y: 224, color: '#DEB887'}, {x: 176, y: 224, color: '#D2B48C'},
+                    {x: 112, y: 228, color: '#D2B48C'}, {x: 116, y: 228, color: '#DEB887'}, {x: 120, y: 228, color: '#F5DEB3'}, {x: 124, y: 228, color: '#DEB887'}, {x: 160, y: 228, color: '#DEB887'}, {x: 164, y: 228, color: '#F5DEB3'}, {x: 168, y: 228, color: '#DEB887'}, {x: 172, y: 228, color: '#D2B48C'},
+                    {x: 116, y: 232, color: '#D2B48C'}, {x: 120, y: 232, color: '#D2B48C'}, {x: 124, y: 232, color: '#D2B48C'}, {x: 160, y: 232, color: '#D2B48C'}, {x: 164, y: 232, color: '#D2B48C'}, {x: 168, y: 232, color: '#D2B48C'},
+
+                    // Burlap bow details
+                    {x: 116, y: 248, color: '#D2B48C'}, {x: 120, y: 248, color: '#D2B48C'}, {x: 124, y: 248, color: '#D2B48C'}, {x: 160, y: 248, color: '#D2B48C'}, {x: 164, y: 248, color: '#D2B48C'}, {x: 168, y: 248, color: '#D2B48C'},
+                    {x: 112, y: 252, color: '#D2B48C'}, {x: 116, y: 252, color: '#DEB887'}, {x: 120, y: 252, color: '#F5DEB3'}, {x: 124, y: 252, color: '#DEB887'}, {x: 160, y: 252, color: '#DEB887'}, {x: 164, y: 252, color: '#F5DEB3'}, {x: 168, y: 252, color: '#DEB887'}, {x: 172, y: 252, color: '#D2B48C'},
+                    {x: 108, y: 256, color: '#D2B48C'}, {x: 112, y: 256, color: '#DEB887'}, {x: 116, y: 256, color: '#F5DEB3'}, {x: 120, y: 256, color: '#DEB887'}, {x: 164, y: 256, color: '#DEB887'}, {x: 168, y: 256, color: '#F5DEB3'}, {x: 172, y: 256, color: '#DEB887'}, {x: 176, y: 256, color: '#D2B48C'},
+                    {x: 112, y: 260, color: '#D2B48C'}, {x: 116, y: 260, color: '#DEB887'}, {x: 120, y: 260, color: '#F5DEB3'}, {x: 124, y: 260, color: '#DEB887'}, {x: 160, y: 260, color: '#DEB887'}, {x: 164, y: 260, color: '#F5DEB3'}, {x: 168, y: 260, color: '#DEB887'}, {x: 172, y: 260, color: '#D2B48C'},
+                    {x: 116, y: 264, color: '#D2B48C'}, {x: 120, y: 264, color: '#D2B48C'}, {x: 124, y: 264, color: '#D2B48C'}, {x: 160, y: 264, color: '#D2B48C'}, {x: 164, y: 264, color: '#D2B48C'}, {x: 168, y: 264, color: '#D2B48C'},
+
+                    // Center bow knot
+                    {x: 128, y: 252, color: '#CD853F'}, {x: 132, y: 252, color: '#DEB887'}, {x: 136, y: 252, color: '#F5DEB3'}, {x: 140, y: 252, color: '#F5DEB3'}, {x: 144, y: 252, color: '#F5DEB3'}, {x: 148, y: 252, color: '#DEB887'}, {x: 152, y: 252, color: '#CD853F'}, {x: 156, y: 252, color: '#CD853F'},
+                    {x: 128, y: 256, color: '#DEB887'}, {x: 132, y: 256, color: '#F5DEB3'}, {x: 136, y: 256, color: '#FFFACD'}, {x: 140, y: 256, color: '#FFFACD'}, {x: 144, y: 256, color: '#FFFACD'}, {x: 148, y: 256, color: '#F5DEB3'}, {x: 152, y: 256, color: '#DEB887'}, {x: 156, y: 256, color: '#DEB887'},
+                    {x: 128, y: 260, color: '#CD853F'}, {x: 132, y: 260, color: '#DEB887'}, {x: 136, y: 260, color: '#F5DEB3'}, {x: 140, y: 260, color: '#F5DEB3'}, {x: 144, y: 260, color: '#F5DEB3'}, {x: 148, y: 260, color: '#DEB887'}, {x: 152, y: 260, color: '#CD853F'}, {x: 156, y: 260, color: '#CD853F'},
+
+                    // Extended stem bundle
+                    {x: 136, y: 236, color: '#228B22'}, {x: 140, y: 236, color: '#228B22'}, {x: 144, y: 236, color: '#228B22'}, {x: 148, y: 236, color: '#228B22'},
+                    {x: 136, y: 240, color: '#228B22'}, {x: 140, y: 240, color: '#228B22'}, {x: 144, y: 240, color: '#228B22'}, {x: 148, y: 240, color: '#228B22'},
+                    {x: 136, y: 244, color: '#228B22'}, {x: 140, y: 244, color: '#228B22'}, {x: 144, y: 244, color: '#228B22'}, {x: 148, y: 244, color: '#228B22'},
+                    {x: 136, y: 268, color: '#228B22'}, {x: 140, y: 268, color: '#228B22'}, {x: 144, y: 268, color: '#228B22'}, {x: 148, y: 268, color: '#228B22'},
+                    {x: 136, y: 272, color: '#228B22'}, {x: 140, y: 272, color: '#228B22'}, {x: 144, y: 272, color: '#228B22'}, {x: 148, y: 272, color: '#228B22'},
+                    {x: 136, y: 276, color: '#228B22'}, {x: 140, y: 276, color: '#228B22'}, {x: 144, y: 276, color: '#228B22'}, {x: 148, y: 276, color: '#228B22'}
+                ]
+            }
+        };
+        // Original love quotes
+        let quotes = [
+            "Every sunrise reminds me how grateful I am to have you in my life.",
+            "You are the poetry my heart was always trying to write.",
+            "In a world of fleeting moments, you are my forever.",
+            "Your love is the gentle breeze that calms my restless soul.",
+            "With you, every ordinary day becomes an extraordinary adventure.",
+            "You are my favorite chapter in the story of my life.",
+            "Your smile is the key that unlocks all the happiness in my heart.",
+            "Like flowers need sunshine, my heart needs your love.",
+            "You make my heart bloom in ways I never thought possible.",
+            "Every beat of my heart whispers your name.",
+            "You are the missing piece that makes my soul complete.",
+            "In your eyes, I found my home, my peace, my everything.",
+            "Your love is the most beautiful song my heart has ever heard.",
+            "You turn my ordinary moments into magical memories.",
+            "With you by my side, every day feels like a celebration of love.",
+            "You are my sunshine on the cloudiest days.",
+            "Your laughter is the melody that brightens my world.",
+            "Like sunflowers follow the sun, my heart follows you."
+        ];
+
+        let currentQuoteIndex = 0;
+        let currentBouquetIndex = 0;
+        let quoteRotationInterval;
+        let bouquetRotationInterval;
+
+        // Get current bouquet based on index
+        function getCurrentBouquet() {
+            const bouquetTypes = Object.keys(bouquetTemplates);
+            return bouquetTypes[currentBouquetIndex % bouquetTypes.length];
+        }
+
+        // Create pixel bouquet with smooth transition
+        function createBouquet() {
+            const bouquetContainer = document.getElementById('bouquet');
+            const bouquetType = getCurrentBouquet();
+            const bouquet = bouquetTemplates[bouquetType];
+            
+            // Fade out existing bouquet
+            bouquetContainer.style.opacity = '0';
+            bouquetContainer.style.transform = 'scale(0.8)';
+            
+            setTimeout(() => {
+                bouquetContainer.innerHTML = '';
+                
+                bouquet.pixels.forEach((pixel, index) => {
+                    setTimeout(() => {
+                        const pixelDiv = document.createElement('div');
+                        pixelDiv.className = 'pixel';
+                        pixelDiv.style.left = pixel.x + 'px';
+                        pixelDiv.style.top = pixel.y + 'px';
+                        pixelDiv.style.backgroundColor = pixel.color;
+                        pixelDiv.style.opacity = '0';
+                        pixelDiv.style.transform = 'scale(0)';
+                        pixelDiv.style.transition = 'all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                        
+                        bouquetContainer.appendChild(pixelDiv);
+                        
+                        setTimeout(() => {
+                            pixelDiv.style.opacity = '1';
+                            pixelDiv.style.transform = 'scale(1)';
+                        }, 30);
+                    }, index * 4);
+                });
+                
+                // Fade in new bouquet
+                setTimeout(() => {
+                    bouquetContainer.style.opacity = '1';
+                    bouquetContainer.style.transform = 'scale(1)';
+                }, 100);
+            }, 400);
+        }
+
+        // Create sparkles around bouquet
+        function createSparkles() {
+            const sparkleContainer = document.getElementById('sparkles');
+            sparkleContainer.innerHTML = '';
+            const sparkleCount = 15;
+            
+            for (let i = 0; i < sparkleCount; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.style.left = (Math.random() * 250 - 125) + 'px';
+                sparkle.style.top = (Math.random() * 200 - 100) + 'px';
+                sparkle.style.animationDelay = Math.random() * 3 + 's';
+                sparkle.style.animationDuration = (2 + Math.random() * 2) + 's';
+                sparkleContainer.appendChild(sparkle);
+            }
+        }
+
+        // Create floating hearts
+        function createFloatingHearts() {
+            const heartsContainer = document.getElementById('floatingHearts');
+            
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.innerHTML = '♡';
+                heart.style.left = Math.random() * window.innerWidth + 'px';
+                heart.style.animationDuration = (6 + Math.random() * 4) + 's';
+                heart.style.fontSize = (16 + Math.random() * 8) + 'px';
+                
+                heartsContainer.appendChild(heart);
+                
+                setTimeout(() => {
+                    heart.remove();
+                }, 8000);
+            }, 3000);
+        }
+
+        // Display and rotate quotes
+        function displayQuote() {
+            const quoteElement = document.getElementById('currentQuote');
+            quoteElement.classList.remove('active');
+            
+            setTimeout(() => {
+                quoteElement.textContent = quotes[currentQuoteIndex];
+                quoteElement.classList.add('active');
+                currentQuoteIndex = (currentQuoteIndex + 1) % quotes.length;
+            }, 400);
+        }
+
+        function startQuoteRotation() {
+            displayQuote();
+            quoteRotationInterval = setInterval(displayQuote, 5000);
+        }
+
+        // Start bouquet rotation
+        function startBouquetRotation() {
+            createBouquet();
+            bouquetRotationInterval = setInterval(() => {
+                currentBouquetIndex = (currentBouquetIndex + 1) % Object.keys(bouquetTemplates).length;
+                createBouquet();
+            }, 8000);
+        }
+
+        // Add new quote function
+        function addQuote() {
+            const input = document.getElementById('quoteInput');
+            const newQuote = input.value.trim();
+            
+            if (newQuote && newQuote.length > 0) {
+                quotes.push(newQuote);
+                input.value = '';
+                showNotification('Your beautiful message has been added! ♡');
+            } else {
+                showNotification('Please write something sweet first! ♡');
+            }
+        }
+
+        // Show notification
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // Handle enter key in input
+        document.getElementById('quoteInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                addQuote();
+            }
+        });
+
+        // Refresh sparkles periodically
+        function refreshSparkles() {
+            createSparkles();
+        }
+
+        // Initialize everything
+        function init() {
+            startBouquetRotation();
+            createSparkles();
+            createFloatingHearts();
+            startQuoteRotation();
+            
+            // Refresh sparkles every 10 seconds
+            setInterval(refreshSparkles, 10000);
+        }
+
+        // Start the magic when page loads
+        window.addEventListener('load', init);
+    </script>
+</body>
+</html>
