@@ -13,13 +13,16 @@
         }
 
         body {
-            background: radial-gradient(circle at center, #FFE4E6 0%, #FFF0F5 30%, #E6E6FA 60%, #F0F8FF 100%);
-            min-height: 100vh;
-            font-family: 'Dancing Script', cursive;
-            overflow-x: hidden;
-            position: relative;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: radial-gradient(circle at center, #FFE4E6 0%, #FFF0F5 30%, #E6E6FA 60%, #F0F8FF 100%);
+          min-height: 100vh;
+          font-family: 'Dancing Script', cursive;
+          overflow: hidden;
+          position: relative;
         }
-
+        
         .magical-bg {
             position: fixed;
             top: 0;
@@ -40,17 +43,13 @@
         }
 
         .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            padding: 20px;
-            position: relative;
-            z-index: 1;
-            text-align: center;
+          display: block;  /* or flex if you want internal flex children, but not full-page centering */
+          padding: 20px;
+          position: relative;
+          z-index: 1;
+          text-align: center;
         }
-
+        
         .bouquet-container {
             position: relative;
             margin-bottom: 60px;
