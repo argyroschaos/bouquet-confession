@@ -19,7 +19,7 @@
           background: radial-gradient(circle at center, #FFE4E6 0%, #FFF0F5 30%, #E6E6FA 60%, #F0F8FF 100%);
           min-height: 100vh;
           font-family: 'Dancing Script', cursive;
-          overflow: hidden;
+          overflow-x: hidden;
           position: relative;
         }
         
@@ -46,17 +46,28 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;    /* This centers vertically within itself */
-            min-height: 100vh;          /* Make the container as tall as viewport */
+            justify-content: center;
+            min-height: 100vh;
+            width: 100%;
+            max-width: 1200px;
             padding: 20px;
             position: relative;
             z-index: 1;
             text-align: center;
+            gap: 40px; /* Equal spacing between all elements */
         }
         
+        .title {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            color: #8B4B8C;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            opacity: 0.9;
+            margin: 0; /* Remove default margins */
+        }
+
         .bouquet-container {
             position: relative;
-            margin-bottom: 60px;
             animation: gentleFloat 6s ease-in-out infinite;
             transition: opacity 0.4s ease, transform 0.4s ease;
             height: 400px;
@@ -78,6 +89,7 @@
             transform-origin: center bottom;
             width: 280px;
             height: 380px;
+            z-index: 1; /* Base layer for bouquet */
         }
 
         .pixel {
@@ -91,11 +103,14 @@
 
         .sparkle-overlay {
             position: absolute;
-            top: -50px;
-            left: -50px;
-            right: -50px;
-            bottom: -50px;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
             pointer-events: none;
+            z-index: 15; /* Higher z-index to appear above bouquet and clouds */
+            width: 100%;
+            height: 100%;
         }
 
         .sparkle {
@@ -122,6 +137,7 @@
             border-radius: 50px;
             animation: cloudFloat 15s linear infinite;
             backdrop-filter: blur(2px);
+            z-index: 10; /* Clouds appear above bouquet but below sparkles */
         }
 
         @keyframes cloudFloat {
@@ -134,6 +150,7 @@
         .quote-section {
             text-align: center;
             max-width: 800px;
+            width: 100%;
             position: relative;
         }
 
@@ -312,16 +329,6 @@
             }
         }
 
-        .title {
-            position: relative;
-            margin-bottom: 30px;
-            font-family: 'Playfair Display', serif;
-            font-size: 32px;
-            color: #8B4B8C;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            opacity: 0.9;
-        }
-
         .notification {
             position: fixed;
             top: 20px;
@@ -346,6 +353,7 @@
         @media (max-width: 768px) {
             .container {
                 padding: 10px;
+                gap: 30px; /* Slightly smaller gap on mobile */
             }
             
             .quote {
@@ -359,7 +367,6 @@
             
             .title {
                 font-size: 24px;
-                top: 20px;
             }
             
             .add-quote-container {
@@ -388,6 +395,7 @@
     
     <div class="container">
         <h1 class="title">Daily Bouquets of Love</h1>
+        
         <div class="bouquet-container">
             <div class="bouquet" id="bouquet"></div>
             <div class="sparkle-overlay" id="sparkles"></div>
@@ -964,8 +972,9 @@
             for (let i = 0; i < sparkleCount; i++) {
                 const sparkle = document.createElement('div');
                 sparkle.className = 'sparkle';
-                sparkle.style.left = (Math.random() * 250 - 125) + 'px';
-                sparkle.style.top = (Math.random() * 200 - 100) + 'px';
+                // Position sparkles within the bouquet area, focusing on flower regions
+                sparkle.style.left = (50 + Math.random() * 180) + 'px'; // Focus on flower area
+                sparkle.style.top = (30 + Math.random() * 150) + 'px';  // Focus on upper portion where flowers are
                 sparkle.style.animationDelay = Math.random() * 3 + 's';
                 sparkle.style.animationDuration = (2 + Math.random() * 2) + 's';
                 sparkleContainer.appendChild(sparkle);
